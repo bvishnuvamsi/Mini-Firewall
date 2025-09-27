@@ -1,9 +1,4 @@
-from dataclasses import dataclass
-
-@dataclass
-class Packet:
-    serial_no: int
-    priority: int
+from models import Packet
 
 def split_fields(line:str):
     line = line.strip()
@@ -23,8 +18,6 @@ def split_fields(line:str):
 
     return parts    
 
-def sort_batch(a):
-    return a
 
 def reading_file(filename, batch_size = 10):
     try:
@@ -37,7 +30,7 @@ def reading_file(filename, batch_size = 10):
                 if fields is None:
                     continue
                     
-                if len(parts) !=2 :
+                if len(fields) !=2 : # we need only two numbers
                     if not header_skipped:
                         header_skipped = True
                         continue
@@ -45,7 +38,7 @@ def reading_file(filename, batch_size = 10):
                     continue
 
                 try:
-                    s = int(fields[0])
+                    s = int(fields[0]) # we need integers
                     p = int(fields[1])
                 except ValueError:
                     if not header_skipped:
@@ -54,17 +47,25 @@ def reading_file(filename, batch_size = 10):
                     print(f"Skipping invalid line {ln}: '{raw.rstrip()}' (non-integer).")
                     continue
 
+                if s < 1 or not (1 <= p <= 10): # Check the range of packets
+                    print("Out of Range")
+                    continue
 
-                all_packets.append(Packets(s,p))
-                for pkt in batch:
-                    print(f"{pkt.serial_no},{pkt.priority}")
-
-            for i in range(0, len(all_packets), batch_size):
-                batch = all_packets[i:i+batch_size]
-                sort_batch(batch)
-                for pkt in batch:
-                    print(f"{pkt.serial_no},{pkt.priority}")
-
+                all_packets.append(Packet(s,p))
+ #               for pkt in batch:
+ #                   print(f"{pkt.serial_no},{pkt.priority}")
 
     except FileNotFoundError:
         print(f"Error: The file '{filename}' was not found.")
+
+    return all_packets
+'''
+if __name__ == "__main__":
+    import sys
+    if len(sys.argv) != 2:
+        print("Usage: python reader.py <file.csv|file.txt>")
+        raise SystemExit(2)
+
+    for pkt in reading_file(sys.argv[1]):
+        print(f"{pkt.serial_no},{pkt.priority}")
+'''
