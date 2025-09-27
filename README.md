@@ -62,6 +62,60 @@ Print the packets **in the order they would be forwarded**, as `SerialNo,Priorit
 ```
 
 (Explanation: priority `1` first → serials `3,10`; then priority `3` → serials `2,4`; etc.)
+---
+
+---
+
+## Implementations Used
+
+1) **Insertion Sort (manual, stable)**  
+   - Sort each batch/window by `(priority, serial_no)` using in-place insertion sort.
+
+2) **Priority Queue (manual min-heap)**  
+   - Keep a window of up to `K` packets in a min-heap keyed by `(priority, serial_no)`; repeatedly pop the best and push the next from input.
+
+---
+
+## Repository Structure
+
+- models.py # Minimal Packet class (serial_no, priority)
+- file_reader.py # read_packets(): parse CSV/TXT, skip optional header, allow # comments
+- sorting.py # sort_batch(): manual insertion sort (stable); sort_batch_builtin() optional
+- priorityqueue.py # MinHeap: push(pkt), pop() — compares by (priority, serial_no)
+- firewall.py # Orchestration: emit_with_insertion_sort(), emit_with_priority_queue()
+- main.py # CLI entrypoint: choose algorithm and batch/window size
+
+
+**File purposes**
+- **models.py** — Defines `Packet` (simple class).
+- **reader.py** — Robust line parsing (`1,5` or `1 5`), optional header, ignores blanks/`#`.
+- **sorter.py** — Manual insertion sort that is stable with the required key.
+- **pqueue.py** — Minimal binary heap used as a priority queue.
+- **firewall.py** — Wiring to read → batch/window → sort/schedule → print.
+- **main.py** — Command-line interface.
+
+---
+
+## How to Run
+
+> Requires Python 3.8+.
+
+### Insertion sort (batch/window)
+```bash
+python main.py <path-to-file> --impl insert --size 10
+```
+
+### Priority queue (windowed scheduling)
+```bash
+python main.py <path-to-file> --impl pq --size 10
+```
+
+### Input Format
+
+- One packet per line: either serial,priority or serial priority.
+- Optional single header line is allowed (e.g., Serial,Priority).
+- Lines starting with # and blank lines are ignored.
+- Constraints: serial_no >= 1, priority ∈ [1..10].
 
 ---
 
