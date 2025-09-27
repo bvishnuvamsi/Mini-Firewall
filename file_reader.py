@@ -59,6 +59,9 @@ def reading_file(filename, batch_size = 10):
         print(f"Error: The file '{filename}' was not found.")
 
     return all_packets
+
+# Testing this file
+
 '''
 if __name__ == "__main__":
     import sys
