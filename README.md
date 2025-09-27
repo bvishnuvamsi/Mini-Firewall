@@ -1,5 +1,3 @@
-# Mini-Firewall
-
 # Mini Firewall (Priority Packet Scheduler)
 
 Design a tiny “firewall” that **filters and forwards packets in priority order**.  
@@ -34,6 +32,7 @@ When deciding which packet to output next, it **always chooses**:
 A text/CSV file with one packet per line:
 
 **Example input (header optional):**
+```csv
 1,5
 2,3
 3,1
@@ -48,6 +47,7 @@ A text/CSV file with one packet per line:
 Print the packets **in the order they would be forwarded**, as `SerialNo,Priority`, one per line.
 
 **Example output for the input above:**
+``` csv
 3,1
 10,1
 2,3
