@@ -1,5 +1,7 @@
 # Mini Firewall (Priority Packet Scheduler)
 
+As a part of Week-3 Assignment for the Coding Bootcamp by Cybersecurity Professionalys led by Karan Dwivedi sir
+
 Design a tiny “firewall” that **filters and forwards packets in priority order**.  
 Each packet has:
 - a **serial number** (`1, 2, 3, …`)
@@ -40,7 +42,8 @@ A text/CSV file with one packet per line:
 5,7
 6,10
 9,5
-10,1```
+10,1
+```
 
 ## Output Format
 
@@ -55,8 +58,8 @@ Print the packets **in the order they would be forwarded**, as `SerialNo,Priorit
 1,5
 9,5
 5,7
-6,10```
-
+6,10
+```
 
 (Explanation: priority `1` first → serials `3,10`; then priority `3` → serials `2,4`; etc.)
 
