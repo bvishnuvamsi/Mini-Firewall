@@ -88,9 +88,9 @@ Print the packets **in the order they would be forwarded**, as `SerialNo,Priorit
 
 **File purposes**
 - **models.py** — Defines `Packet` (simple class).
-- **reader.py** — Robust line parsing (`1,5` or `1 5`), optional header, ignores blanks/`#`.
-- **sorter.py** — Manual insertion sort that is stable with the required key.
-- **pqueue.py** — Minimal binary heap used as a priority queue.
+- **file_reader.py** — Robust line parsing (`1,5` or `1 5`), optional header, ignores blanks/`#`.
+- **sorting.py** — Manual insertion sort that is stable with the required key.
+- **priorityqueue.py** — Minimal binary heap used as a priority queue.
 - **firewall.py** — Wiring to read → batch/window → sort/schedule → print.
 - **main.py** — Command-line interface.
 
